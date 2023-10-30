@@ -1,17 +1,34 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-native-fetch';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import { nativeFetch } from 'react-native-native-fetch';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
+  const [fetching, setFetching] = React.useState(false);
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+  const handleFetchPress = React.useCallback(() => {
+    setFetching(true);
+    nativeFetch('https://httpbin.org/post', {
+      method: 'POST',
+      body: JSON.stringify({ arg1: 'Hello', arg2: 'Alauddin' }),
+    })
+      .then((res) => {
+        console.log('response', res);
+        setResult(res);
+      })
+      .catch((error) => {
+        console.log('ERROR', error);
+      })
+      .finally(() => {
+        setFetching(false);
+      });
   }, []);
 
   return (
     <View style={styles.container}>
+      <Button title="Fetch" onPress={handleFetchPress} />
+      {fetching && <Text>Fetching...</Text>}
       <Text>Result: {result}</Text>
     </View>
   );

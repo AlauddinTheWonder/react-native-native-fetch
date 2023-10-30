@@ -8,15 +8,48 @@ Native HTTP request api
 npm install react-native-native-fetch
 ```
 
+### Android
+
+- Add following permissions into `android/src/main/AndroidManifest.xml`
+
+```android
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+- Also set `usesCleartextTraffic` to `true` to enable `http` (non `https`) requests as below.
+
+```android
+<application
+    android:usesCleartextTraffic="true"
+/>
+```
+
 ## Usage
 
-```js
-import { multiply } from 'react-native-native-fetch';
+```ts
+import { nativeFetch } from 'react-native-native-fetch';
 
 // ...
 
-const result = await multiply(3, 7);
+interface INativeFetchOptions {
+  body?: string;
+  contentType?: 'JSON' | 'PLAIN' | 'MULTIPART';
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+}
+
+const payload = { arg1: 'Hello', arg2: 'World' };
+
+const result = await nativeFetch('http://some-url.com', {
+  body: JSON.stringify(payload),
+  contentType: 'JSON',
+  method: 'POST',
+}: INativeFetchOptions): Promise<any>;
 ```
+
+## TODO
+
+- [x] Android support
+- [ ] iOS support
 
 ## Contributing
 
@@ -28,4 +61,4 @@ MIT
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Created by Alauddin Ansari (alauddinx27@gmail.com)

@@ -37,7 +37,9 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "fetch",
+    "native-fetch"
   ],
   "repository": "https://github.com/AlauddinTheWonder/react-native-native-fetch",
   "author": "Alauddin Ansari <alauddinx27@gmail.com> (https://github.com/AlauddinTheWonder)",

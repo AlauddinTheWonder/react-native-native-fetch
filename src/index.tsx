@@ -6,7 +6,7 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-const NativeFetch = NativeModules.NativeFetch
+const NativeFetchApi = NativeModules.NativeFetch
   ? NativeModules.NativeFetch
   : new Proxy(
       {},
@@ -17,6 +17,20 @@ const NativeFetch = NativeModules.NativeFetch
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return NativeFetch.multiply(a, b);
+interface INativeFetchOptions {
+  body?: string;
+  contentType?: 'JSON' | 'PLAIN' | 'MULTIPART';
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+}
+
+const defaultOptions: INativeFetchOptions = {
+  contentType: 'JSON',
+  method: 'GET',
+};
+
+export function nativeFetch(
+  url: string,
+  options?: INativeFetchOptions
+): Promise<number> {
+  return NativeFetchApi.fetch(url, Object.assign(defaultOptions, options));
 }

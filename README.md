@@ -31,12 +31,6 @@ import { nativeFetch } from 'react-native-native-fetch';
 
 // ...
 
-interface INativeFetchOptions {
-  body?: string;
-  contentType?: 'JSON' | 'PLAIN' | 'MULTIPART';
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
-}
-
 const payload = { arg1: 'Hello', arg2: 'World' };
 
 const result = await nativeFetch('http://some-url.com', {
@@ -44,6 +38,13 @@ const result = await nativeFetch('http://some-url.com', {
   contentType: 'JSON',
   method: 'POST',
 }: INativeFetchOptions): Promise<any>;
+
+// types
+interface INativeFetchOptions {
+  body?: string;
+  contentType?: 'JSON' | 'PLAIN' | 'MULTIPART';
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+}
 ```
 
 ## TODO

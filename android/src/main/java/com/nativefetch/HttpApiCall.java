@@ -57,18 +57,18 @@ public class HttpApiCall extends AsyncTask<HttpApiCall.Params, Void, String> {
     String apiUrl = apiParams.url;
     String httpMethod = apiParams.method;
 
+    HttpURLConnection connection = null;
+
     try {
       URL url = new URL(apiUrl);
-      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-      // Enable input and output streams
-      connection.setDoInput(true);
-      connection.setDoOutput(true);
+      connection = (HttpURLConnection) url.openConnection();
 
       connection.setRequestMethod(httpMethod);
 
       if ("POST".equalsIgnoreCase(httpMethod) && apiParams.requestBodyMap != null) {
-        Log.d(TAG, apiParams.requestBodyMap.toString());
+        // Enable input and output streams
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
 
         String postData = "";
 
@@ -100,6 +100,7 @@ public class HttpApiCall extends AsyncTask<HttpApiCall.Params, Void, String> {
           connection.setRequestProperty("Content-Type", "text/plain");
         }
 
+        Log.d(TAG, "Payload:");
         Log.d(TAG, postData);
 
         // Get the output stream and write the request body to it
@@ -132,6 +133,10 @@ public class HttpApiCall extends AsyncTask<HttpApiCall.Params, Void, String> {
         responseListener.onError("Exception: " + e.getMessage());
       }
       return null;
+    } finally {
+      if (connection != null) {
+        connection.disconnect();
+      }
     }
   }
 

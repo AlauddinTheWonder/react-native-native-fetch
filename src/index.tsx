@@ -31,6 +31,6 @@ const defaultOptions: INativeFetchOptions = {
 export function nativeFetch(
   url: string,
   options?: INativeFetchOptions
-): Promise<number> {
-  return NativeFetchApi.fetch(url, Object.assign(defaultOptions, options));
+): Promise<string> {
+  return NativeFetchApi.fetch(url, Object.assign({}, defaultOptions, options));
 }

@@ -70,6 +70,10 @@ yarn test
 
 We follow the [conventional commits specification](https://www.conventionalcommits.org/en) for our commit messages:
 
+```sh
+type(scope?): subject # subject should be all in lowercase. #scope is optional; multiple scopes are supported (current delimiter options: "/", "\" and ",")
+```
+
 - `fix`: bug fixes, e.g. fix crash due to deprecated method.
 - `feat`: new features, e.g. add new method to the module.
 - `refactor`: code refactor, e.g. migrate from class components to hooks.
